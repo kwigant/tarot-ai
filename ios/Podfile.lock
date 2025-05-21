@@ -1655,6 +1655,10 @@ PODS:
     - React-perflogger (= 0.79.2)
     - React-utils (= 0.79.2)
   - SocketRocket (0.7.1)
+  - VisionCamera (3.9.2):
+    - React
+    - React-callinvoker
+    - React-Core
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1729,6 +1733,7 @@ DEPENDENCIES:
   - ReactAppDependencyProvider (from `build/generated/ios`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - VisionCamera (from `../node_modules/react-native-vision-camera`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1875,6 +1880,8 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  VisionCamera:
+    :path: "../node_modules/react-native-vision-camera"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1949,6 +1956,7 @@ SPEC CHECKSUMS:
   ReactCodegen: fda99a79c866370190e162083a35602fdc314e5d
   ReactCommon: 4d0da92a5eb8da86c08e3ec34bd23ab439fb2461
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
+  VisionCamera: 36c460338692788a0d377dce7d32f8ba049fb4f2
   Yoga: c758bfb934100bb4bf9cbaccb52557cee35e8bdf
 
 PODFILE CHECKSUM: c904dc01d798b75b4d697dfbc97c9df0d7097da4
