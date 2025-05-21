@@ -1,38 +1,45 @@
-import {useEffect, useState} from 'react';
-import { StyleSheet, Text, View} from 'react-native';
-import {
-  Camera,
-  CameraPermissionStatus,
-  useCameraDevice,
-} from 'react-native-vision-camera';
+import React, { useRef } from 'react';
+import { Button, StyleSheet, Text, View,  } from 'react-native';
+import { Camera, useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
 
-export default function Index() {
-  const [hasPermission, setHasPermission] =
-    useState<CameraPermissionStatus>('not-determined');
+export default function App() {
+    const device = useCameraDevice('back');
+    const {hasPermission} = useCameraPermission();
+  // Take photo
+  const camera = useRef<Camera>(null);
 
-  useEffect(() => {
-    Camera.requestCameraPermission().then(p => {
-      if (p === 'granted') {
-        setHasPermission('granted');
-      }
-    });
-  }, []);
+  const takePhoto = async () => {
+    if (camera.current) {
+      const photo = await camera.current.takePhoto({
+        flash: 'off',
+      });
+      const result = await fetch(`file://${photo.path}`)
+      const data = await result.blob();
+      console.log('Photo data:', data);
 
-  const device = useCameraDevice('back');
+      // setPhotoPath('file://' + photo.path); // Android needs `file://` prefix
+    }
+  };
+    if (!hasPermission) {
+      Camera.requestCameraPermission();
+    }
+    if (device == null) {
+      return <Text>Error: No Camera Device</Text>;
+    }
+    return (
+    <View style={styles.container}>
+      
+        <Camera ref={camera} style={StyleSheet.absoluteFill} photo={true} device={device} isActive={true} />
+        <Button title="Take Photo" onPress={takePhoto} />
 
-  if (!hasPermission) {
-    return Camera.requestCameraPermission();
+    </View>
+    );
   }
-  
-  return (
- <View style={StyleSheet.absoluteFill}>
-      {!hasPermission && <Text >No Camera Permission.</Text>}
-      {hasPermission && device != null && (
-        <Camera
-          style={StyleSheet.absoluteFill}
-          device={device}
-          isActive={true}
-        />
-      )}
-    </View>  );
-}
+
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
